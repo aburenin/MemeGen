@@ -39,6 +39,3 @@ Click the "Generate" button to create and display your meme.
 Click the "Clear" button to clear the text fields and hide the meme image.
 Contributing
 If you'd like to contribute to the project, please fork the project, make your changes, and submit a pull request. All contributions are welcome!
-
-License
-MemeGen is open source and is licensed under the MIT License.
