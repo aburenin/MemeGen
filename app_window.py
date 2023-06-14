@@ -25,18 +25,19 @@ Functions:
     This function initializes and displays the PyQt6 application.
 
 Usage:
------
+------
 Run the main() function to start the application. Once started, input your desired texts, select a meme
 template, and click the 'Generate' button to create a meme. You can clear the input fields and the meme image
 by clicking the 'Clear' button.
 """
 
-from PyQt6.QtWidgets import QApplication, QDialog
+from PyQt6.QtWidgets import QApplication, QDialog, QFileDialog
 from PyQt6.QtGui import QPixmap
 from PyQt6.uic import loadUi
 
 from mem_gen_request import generate_meme, list_meme
 import sys
+import os
 
 class Memgen(QDialog):
     def __init__(self):
@@ -50,6 +51,9 @@ class Memgen(QDialog):
         self.bt_clear.hide()
         self.bt_clear.clicked.connect(self.clear)
 
+        self.bt_download.hide()
+        self.bt_download.clicked.connect(self.download_img)
+
         # Adding elements to QComboBox
         for item in list_meme():
             self.box_meme.addItem(item)
@@ -62,17 +66,27 @@ class Memgen(QDialog):
         bottom_text = self.le_bottomtext.text()
         meme = self.box_meme.currentText()
         generate_meme(top_text=top_text,bottom_text=bottom_text,meme=meme)
+        self.image = QPixmap('meme.png')
         self.lb_memimage.show()
-        self.lb_memimage.setPixmap(QPixmap('meme.png'))
+        self.lb_memimage.setPixmap(self.image)
         self.bt_clear.show()
+        self.bt_download.show()
         self.adjustSize()  # Automatically adjust the window size to the image size
+        os.remove('meme.png')
 
     def clear(self):
         self.le_toptext.clear()
         self.le_bottomtext.clear()
         self.lb_memimage.hide()
         self.bt_clear.hide()
+        self.bt_download.hide()
         self.adjustSize()
+
+    def download_img(self):
+        fileName, _ = QFileDialog.getSaveFileName(None)  # Opens a dialog window
+        if fileName:
+            self.image.save(f'{fileName}.png', 'PNG')  # Save the current image to the chosen location with a PNG format
+
 
 def main():
     app = QApplication(sys.argv)
