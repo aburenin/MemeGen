@@ -66,13 +66,16 @@ class Memgen(QDialog):
         bottom_text = self.le_bottomtext.text()
         meme = self.box_meme.currentText()
         generate_meme(top_text=top_text,bottom_text=bottom_text,meme=meme)
-        self.image = QPixmap('meme.png')
-        self.lb_memimage.show()
-        self.lb_memimage.setPixmap(self.image)
-        self.bt_clear.show()
-        self.bt_download.show()
-        self.adjustSize()  # Automatically adjust the window size to the image size
-        os.remove('meme.png')
+        try:
+            self.image = QPixmap('meme.png')
+            self.lb_memimage.show()
+            self.lb_memimage.setPixmap(self.image)
+            self.bt_clear.show()
+            self.bt_download.show()
+            self.adjustSize()  # Automatically adjust the window size to the image size
+            os.remove('meme.png')
+        except:
+            self.clear()
 
     def clear(self):
         self.le_toptext.clear()
