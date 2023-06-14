@@ -25,7 +25,7 @@ Functions:
     This function initializes and displays the PyQt6 application.
 
 Usage:
------
+------
 Run the main() function to start the application. Once started, input your desired texts, select a meme
 template, and click the 'Generate' button to create a meme. You can clear the input fields and the meme image
 by clicking the 'Clear' button.
@@ -74,7 +74,11 @@ class Memgen(QDialog):
         self.bt_clear.hide()
         self.adjustSize()
 
+def plus(a,b):
+    return (a+b)
+
 def main():
+    print(plus(2,3))
     app = QApplication(sys.argv)
     ui = Memgen()
     ui.show()
